@@ -8,6 +8,6 @@ def multi_input():
         data += line + '\n'
     return data
 
-
-story1 = multi_input()
-print(story1)
+if __name__ =="__main__":
+    story1 = multi_input()
+    print(story1)
