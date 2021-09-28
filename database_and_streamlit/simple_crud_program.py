@@ -53,7 +53,22 @@ def view_all_students():
     results = db.query(Student).all()
     for std  in results:
         print(std.roll_no,std.name)
-    input('press enter to continue ')
+    input('press enter to continue ☑')
+
+def delete_student():
+    global Session
+    roll_num = input("👨‍🎓students roll no:")
+    if roll_num:
+        db = Session()
+        student = db.query(Student).filter(Student.roll_no.like(roll_num))
+        db.delete(student[0]) # the first result
+        db.commit()
+        db.close()
+        print("👨‍🎓STUDENT REMOVED FROM DATABASE")
+    else:
+        print('invalid value passed as roll no')
+    input('press enter to continue')
+
 # main loop
 while True:
     ch = database_menu()
