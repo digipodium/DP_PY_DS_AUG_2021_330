@@ -39,6 +39,7 @@ def add_student():
         db.commit()                                             # 4. save database
         db.close()                                              # 5. close database
         print('👨‍🎓 Student added successfully ✔')
+        input('press enter to continue ☑')
     else:
         print('invalid details')
         print('name:',name)
@@ -46,6 +47,7 @@ def add_student():
         print('mother:',mname)
         print('rollno:',rollno)
         print('class and section:',klass,section)
+        input('press enter to continue ☑')
 
 def view_all_students():
     global Session
@@ -67,6 +69,40 @@ def delete_student():
         print("👨‍🎓STUDENT REMOVED FROM DATABASE")
     else:
         print('invalid value passed as roll no')
+    input('press enter to continue')
+
+def update_student_grades():
+    global Session
+    id = input('👨‍🎓Student id:')
+    if id:
+        db = Session()
+        student_grade = db.query(StudentGrades).get(id=int(id)) # single item
+        if student_grade:
+            name = input(f"{student_grade.name}(change Name): ")
+            english = input(f'{student_grade.english} (change English Marks): ')
+            hindi = input(f'{student_grade.hindi} (change Hindi Marks):')
+            maths = input(f'{student_grade.maths} (change Maths Marks):')
+            if not name:
+                name = student_grade.name
+            if not maths:
+                maths = student_grade.maths
+            if not english:
+                english= student_grade.english
+            if not hindi:
+                hindi = student_grade.hindi
+            
+            # update the database
+            student_grade.name = name
+            student_grade.hindi = int(hindi)
+            student_grade.english = int(english)
+            student_grade.maths = int(maths)
+            db.commit()
+            db.close()
+            print('information updated')
+        else:
+            print(f'no student grades found for id {id}')
+    else:
+        print('invalid value')
     input('press enter to continue')
 
 # main loop
